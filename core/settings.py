@@ -25,9 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "posts.apps.PostsConfig",
-    "users.apps.UsersConfig",
-    "livereload",
+    "posts",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -38,8 +37,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
-    "livereload.middleware.LiveReloadScript",
 ]
 
 ROOT_URLCONF = "core.urls"
