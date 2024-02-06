@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     username = models.CharField(unique=True, max_length=50)
     cv = models.FileField(upload_to="cv/")
+    bio = models.TextField(default="")
     resume = models.FileField(upload_to="cv/")
     avatar = models.ImageField(upload_to="images/", default="image/default.png")
     dob = models.DateField(null=True)
