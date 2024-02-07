@@ -1,9 +1,16 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
-# Create your models here.
 class CustomUser(AbstractUser):
+    RECRUIT = "recruit"
+    RECRUITER = "recruiter"
+
+    ROLE_CHOICES = [
+        (RECRUIT, "Recruit"),
+        (RECRUITER, "Recruiter"),
+    ]
+
     username = models.CharField(unique=True, max_length=50)
     cv = models.FileField(upload_to="cv/")
     bio = models.TextField(default="")
@@ -11,6 +18,7 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to="images/", default="image/default.png")
     dob = models.DateField(null=True)
     email = models.EmailField(unique=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -19,4 +27,4 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ["username"]
 
     def __str__(self):
-        return self.username
+        return f"{self.username} - {self.get_role_display()}"
