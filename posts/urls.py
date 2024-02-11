@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import test
+from .views import PostListView
+
+
 app_name = "posts"
 
 urlpatterns = [
-    path('', test),
+    path("", PostListView.as_view(), name="post-list"),
 ]

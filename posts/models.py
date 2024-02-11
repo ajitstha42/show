@@ -19,7 +19,7 @@ class Post(TimeStampedModel):
     media_files = models.ManyToManyField(
         "MediaFile",
         blank=True,
-        related_name="posts",  # Change related_name here
+        related_name="posts",
     )
 
     def __str__(self):

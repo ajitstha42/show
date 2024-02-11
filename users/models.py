@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.hashers import mask_hash
 from django.db import models
 
 
