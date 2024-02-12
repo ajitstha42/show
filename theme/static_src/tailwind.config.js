@@ -44,7 +44,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        BGM: "#FEE1C7",
+        BGM: "#efefef",
       },
     },
   },
