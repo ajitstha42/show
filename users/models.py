@@ -28,3 +28,9 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username} - {self.get_role_display()}"
+
+    def has_cv(self):
+        return bool(self.cv)
+
+    def has_resume(self):
+        return bool(self.resume)

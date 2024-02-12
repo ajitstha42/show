@@ -14,7 +14,7 @@
           <p>{{ post.created_at|date:"Y-m-d" }}</p>
         </div>
       </div>
-      <p class="text-lg mb-3 font-medium">{{ post.title }}</p>
+      <p class="text-lg mb-3 font-medium border-b border-gray-500 my-4">{{ post.title }}</p>
 
       {% if post.media_files.all %}
         <div class="max-w-700 grid grid-cols-2 gap-4 overflow-x-hidden relative">
@@ -34,8 +34,23 @@
       {% endif %}
 
       <div class="mt-3">
+        <div class="border-b border-gray-500 my-4"></div>
         <p class="text-lg">{{ post.description }}</p>
         <p>{{ post.comments.count }}</p>
+      </div>
+
+      <div>
+          {% if post.user.has_cv%}
+            <a href="{{ post.user.cv.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download CV</a>
+            <span class="mx-2">and</span>
+          {% endif %}  
+
+
+          {% if post.user.has_resume%}
+            <a href="{{ post.user.cv.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download CV</a>
+            <span class="mx-2">and</span>
+           <a href="{{ post.user.resume.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download Resume</a>
+          {% endif %}  
       </div>
     </article>
   {% endfor %}
