@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
     cv = models.FileField(upload_to="cv/")
     bio = models.TextField(default="")
     resume = models.FileField(upload_to="cv/")
-    avatar = models.ImageField(upload_to="images/", default="idefault.jpg")
+    avatar = models.ImageField(upload_to="images/", default="default.jpg")
     dob = models.DateField(null=True)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
