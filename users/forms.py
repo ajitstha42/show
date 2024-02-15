@@ -8,6 +8,8 @@ class CustomUserCreationForm(UserCreationForm):
         fields = [
             "first_name",
             "last_name",
+            "password1",
+            "password2",
             "username",
             "avatar",
             "email",
