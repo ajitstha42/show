@@ -2,12 +2,11 @@
 
 {% block content %}
     <div class="container mx-auto mt-5">
-        <h2 class="mb-4 text-2xl font-bold text-gray-800 dark:text-white">Log In</h2>
         <form method="post" action="{% url 'login' %}" class="max-w-sm mx-auto">
             {% csrf_token %}
 
             <div class="mb-5">
-                <label for="{{ form.username.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username or Email</label>
+                <label for="{{ form.username.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                 {{ form.username }}
                 <div class="text-red-500">
                     {{ form.username.errors }}
