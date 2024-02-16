@@ -12,11 +12,11 @@ class CustomUser(AbstractUser):
     ]
 
     username = models.CharField(unique=True, max_length=50)
-    cv = models.FileField(upload_to="cv/")
-    bio = models.TextField(default="")
-    resume = models.FileField(upload_to="cv/")
+    cv = models.FileField(upload_to="cv/", null=True)
+    bio = models.TextField(default="", blank=True, null=True)
+    resume = models.FileField(upload_to="resume/", null=True)
     avatar = models.ImageField(upload_to="images/", default="default.jpg")
-    dob = models.DateField(null=True)
+    dob = models.DateField(blank=True, null=True)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
