@@ -1,41 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container mx-auto mt-5">
-        <form method="post" enctype="multipart/form-data" class="max-w-sm mx-auto">
-            {% csrf_token %}
-            {% for message in messages %}
-                <div class="text-red-500" role="alert">
-                    <p class="font-bold">{{ message.tags }}</p>
-                    <p>{{ message }}</p>
-                </div>
-            {% endfor %}
 
-            <div class="mb-5">
-                <label for="{{ form.title.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Post Title</label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                    <p class="text-red-500 text-sm">{{ form.title.errors }}</p>
-                {% endif %}
+<form method="post" enctype="multipart/form-data" class="max-w-sm mx-auto">
+    {% csrf_token %}
+
+    <div class="mb-5">
+        <label for="{{ form.title.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+            <div class="text-red-500">
+                {{ form.title.errors }}
             </div>
-
-            <div class="mb-5">
-                <label for="{{ form.description.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                    <p class="text-red-500 text-sm">{{ form.description.errors }}</p>
-                {% endif %}
-            </div>
-
-            <div class="mb-5">
-                <label for="{{ form.media_files.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Media Files</label>
-                {{ form.media_files }}
-                {% if form.media_files.errors %}
-                    <p class="text-red-500 text-sm">{{ form.media_files.errors }}</p>
-                {% endif %}
-            </div>
-
-            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Post</button>
-        </form>
+        {% endif %}
     </div>
+
+    <div class="mb-5">
+        <label for="{{ form.description.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+        {{ form.description }}
+        {% if form.description.errors %}
+            <div class="text-red-500">
+                {{ form.description.errors }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-5">
+        <label for="{{ form.media_files.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Media Files</label>
+        {{ form.media_files }}
+        {% if form.media_files.errors %}
+            <div class="text-red-500">
+                {{ form.media_files.errors }}
+            </div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+</form>
+
 {% endblock content %}

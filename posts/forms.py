@@ -4,8 +4,8 @@ from .models import Post
 
 
 class PostForm(forms.ModelForm):
+    media_files = MultiFileField(max_num=10, max_file_size=1024 * 1024 * 5)
+
     class Meta:
         model = Post
-        fields = ["user", "title", "description", "media_files"]
-
-    media_files = MultiFileField(max_num=10, max_file_size=1024 * 1024 * 5)
+        fields = ["title", "description", "media_files"]

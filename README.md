@@ -1,6 +1,4 @@
 TO DO
-don't let authenticated  users visit signup and login view
-work on post form
-
+-- template --> show edit and update button only if the post is of authenticated user
 
 -- Show CV and Resume to only recruiter

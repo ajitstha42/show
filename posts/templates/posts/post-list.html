@@ -3,7 +3,7 @@
 {% block title %} Posts {% endblock title %} 
 {% block content %}
   {% for post in posts %}
-    <article class="max-w-screen-md mx-auto p-3 text-gray-800 border border-black rounded-lg">
+    <article class="max-w-screen-md mx-auto p-3 text-gray-800 border border-black rounded-lg mb-8">
       <div class="flex items-center mb-3">
         <img
           src="{% if post.user.profile.picture %}{{ post.user.profile.picture.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
@@ -14,7 +14,9 @@
           <p>{{ post.created_at|date:"Y-m-d" }}</p>
         </div>
       </div>
-      <p class="text-lg mb-3 font-medium border-b border-gray-500 my-4">{{ post.title }}</p>
+      <p class="text-lg mb-3 font-medium border-b border-gray-500 my-4">
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+      </p>
 
       {% if post.media_files.all %}
         <div class="max-w-700 grid grid-cols-2 gap-4 overflow-x-hidden relative">
