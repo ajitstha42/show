@@ -4,6 +4,8 @@ from django.views.generic import CreateView, DetailView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.shortcuts import render
 
 from .forms import CustomUserCreationForm
 from .models import CustomUser
@@ -31,14 +33,34 @@ class CustomLoginView(LoginView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class UserProfileView(DetailView):
+class UserProfileView(UserPassesTestMixin, DetailView):
     model = CustomUser
     template_name = "registration/profile.html"
     context_object_name = "user_profile"
 
+    def test_func(self):
+
+        user_profile = self.get_object()
+        return (
+            self.request.user == user_profile
+            or self.request.user.role == CustomUser.RECRUITER
+        )
+
+    def handle_no_permission(self):
+        return render(self.request, "403.html", status=403)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_profile = context["user_profile"]
-        posts = Post.objects.filter(user=user_profile).order_by("-created_at")
-        context["user_posts"] = posts
+
+        can_view_cv_and_resume = self.test_func()
+
+        if can_view_cv_and_resume:
+            context["user_posts"] = Post.objects.filter(user=user_profile).order_by(
+                "-created_at"
+            )
+            context["can_view_cv_and_resume"] = True
+        else:
+            context["can_view_cv_and_resume"] = False
+
         return context

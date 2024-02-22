@@ -4,31 +4,32 @@
 {% block content %}
     <article class="max-w-screen-md mx-auto p-3 text-gray-800 border border-black rounded-lg mb-8">
          <div class="flex justify-between items-center mb-3">
-        <div class="flex items-center">
-            <img
-                src="{% if post.user.profile.picture %}{{ post.user.profile.picture.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
-                class="rounded-full w-12 h-12 inline-block mr-2"
-            />
-            <div>
-                <p>{{ post.user.username }}</p>
-                <p>{{ post.created_at|date:"Y-m-d" }}</p>
+            <div class="flex items-center">
+                <img
+                    src="{% if post.user.profile.picture %}{{ post.user.profile.picture.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
+                    class="rounded-full w-12 h-12 inline-block mr-2"
+                />
+                <div>
+                    <p>{{ post.user.username }}</p>
+                    <p>{{ post.created_at|date:"Y-m-d" }}</p>
+                </div>
             </div>
+            
+            {% if post.user == request.user and request.resolver_match.url_name == 'post-detail' %}
+                <div class="flex">
+                    <a href="{% url 'posts:post-update' pk=post.pk %}" class="bg-green-500 text-white py-2 px-4 rounded inline-block mt-2">Update</a>
+                    <a href="{% url 'posts:post-delete' pk=post.pk %}" class="bg-red-500 text-white py-2 px-4 rounded inline-block mt-2 ml-2">Delete</a>
+                </div>
+            {% endif %}
         </div>
-        
-        {% if post.user == request.user and request.resolver_match.url_name == 'post-detail'%}
-            <div class="flex">
-                <a href="{% url 'posts:post-update' pk=post.pk %}" class="bg-green-500 text-white py-2 px-4 rounded inline-block mt-2">Update</a>
-                <a href="{% url 'posts:post-delete' pk=post.pk %}" class="bg-red-500 text-white py-2 px-4 rounded inline-block mt-2 ml-2">Delete</a>
-            </div>
-        {% endif %}
-        </div>
-        <p class="text-lg mb-3 font-medium border-b border-gray-500 my-4">{{ post.title }}</p>
+
+        <h2 class="text-lg mb-3 font-medium border-b border-gray-500 my-4">{{ post.title }}</h2>
 
         {% if post.media_files.all %}
             <div class="max-w-700 grid grid-cols-2 gap-4 overflow-x-hidden relative">
                 {% for media_file in post.media_files.all %}
                     <div class="flex-shrink-0">
-                        {% if media_file.media.name|lower|slice:"-4:" == '.mp4' or media_file.media.name|lower|slice:"-4:" == '.mkv' %}
+                        {% if media_file.media.name|lower|slice:"-4:" in ['.mp4', '.mkv'] %}
                             <video controls class="w-full h-auto">
                                 <source src="{{ media_file.media.url }}" type="video/mp4">
                                 Your browser does not support the video tag.
