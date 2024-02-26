@@ -1,0 +1,102 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<form
+  method="post"
+  action="{% url 'edit_profile' pk=user.pk %}"
+  class="max-w-sm mx-auto"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %} {% if form.non_field_errors %}
+  <div class="mb-5">
+    <div class="text-red-500">{{ form.non_field_errors }}</div>
+  </div>
+  {% endif %}
+
+  <div class="mb-5">
+    <label
+      for="{{ form.email.id_for_label }}"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold"
+      >Email address</label
+    >
+    {{ form.email }} {% if form.email.errors %}
+    <div class="text-red-500">{{ form.email.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-5">
+    <label
+      for="{{ form.first_name.id_for_label }}"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold"
+      >First name</label
+    >
+    {{ form.first_name }} {% if form.first_name.errors %}
+    <div class="text-red-500">{{ form.first_name.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-5">
+    <label
+      for="{{ form.last_name.id_for_label }}"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold"
+      >Last name</label
+    >
+    {{ form.last_name }} {% if form.last_name.errors %}
+    <div class="text-red-500">{{ form.last_name.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-5">
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold">Avatar</label>
+    <img src="{{ user.avatar.url }}" alt="Current Avatar" class="max-w-xs mb-2">
+    <input type="file" name="avatar" accept="image/*" id="id_avatar">
+    {% if form.avatar.errors %}
+        <div class="text-red-500">
+            {{ form.avatar.errors }}
+        </div>
+    {% endif %}
+</div>
+
+ <div class="mb-5">
+    <label for="{{ form.cv.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold">CV (PDF only)</label>
+    {{ form.cv }}
+    {% if form.cv.errors %}
+        <div class="text-red-500">
+            {{ form.cv.errors }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="mb-5">
+    <label for="{{ form.resume.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold">Resume (PDF only)</label>
+    {{ form.resume }}
+    {% if form.resume.errors %}
+        <div class="text-red-500">
+            {{ form.resume.errors }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="mb-5">
+    <label for="{{ form.dob.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-bold">Date of Birth</label>
+    
+    <input 
+        type="date" 
+        name="{{ form.dob.name }}" 
+        id="{{ form.dob.id }}" 
+        class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-200 focus:border-blue-500"
+    />
+
+    {% if form.dob.errors %}
+        <div class="text-red-500">
+            {{ form.dob.errors }}
+        </div>
+    {% endif %}
+</div>
+
+  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 p-4">
+    Update Profile
+  </button>
+</form>
+
+{% endblock content %}

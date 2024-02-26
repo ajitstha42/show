@@ -1,13 +1,14 @@
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, DetailView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser
 from posts.models import Post
 
@@ -64,3 +65,15 @@ class UserProfileView(UserPassesTestMixin, DetailView):
             context["can_view_cv_and_resume"] = False
 
         return context
+
+
+class UpdateProfileView(UpdateView):
+    model = CustomUser
+    form_class = CustomUserChangeForm
+    template_name = "registration/update_profile.html"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(CustomUser, pk=self.kwargs["pk"])
+
+    def get_success_url(self):
+        return reverse_lazy("profile", kwargs={"pk": self.object.pk})

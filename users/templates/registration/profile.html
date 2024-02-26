@@ -8,7 +8,9 @@
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-3xl font-semibold">{{ user_profile.username }}'s Profile</h2>
       {% if user.is_authenticated and user == user_profile %}
-        <a href="#" class="text-blue-500 hover:underline">Edit Profile</a>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+    <a href="{% url 'edit_profile' pk=user.pk %}" class="text-white no-underline">Edit Profile</a>
+</button>
       {% endif %}
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
