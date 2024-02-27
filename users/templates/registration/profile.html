@@ -4,7 +4,7 @@
 {% block title %}Profile{% endblock title %}
 
 {% block content %}
-  <div class="container mx-auto mt-8 p-8 bg-white rounded-md shadow-md">
+  <div class="container mx-auto mt-8 p-8 bg-white rounded-md shadow-md max-w-screen-md">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-3xl font-semibold">{{ user_profile.username }}'s Profile</h2>
       {% if user.is_authenticated and user == user_profile %}
@@ -23,7 +23,6 @@
         {% if user.is_authenticated and user == user_profile %}
           <p class="text-lg text-gray-700">Email: {{ user_profile.email }}</p>
         {% endif %}
-        <!-- Add more fields as needed -->
       </div>
     </div>
     {% if user.is_authenticated and user == user_profile %}
@@ -44,7 +43,6 @@
     {% endif %}
   </div>
 
-  <!-- Posts section -->
 <h2 class="text-2xl text-center font-semibold mt-8 mb-4">Posts</h2>
 {% if user_posts %}
 {% for post in user_posts %}
