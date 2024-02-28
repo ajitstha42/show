@@ -1,8 +1,10 @@
 TO DO
+-- Add Dummy data
 -- Send email for further discussion (SendGrid)
 -- Add Tags in Post
--- User-based result
+-- User-based POST
 -- Serach
+-- fix post's mediafiles UI
 
 REFACTOR:
 -- post-detail and post-list (CR)
