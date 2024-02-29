@@ -2,7 +2,7 @@ import uuid
 
 
 def image_upload_to(instance, filename):
-    return f'images/{uuid.uuid4()}.{"jpg"}'
+    return f'avatar/{uuid.uuid4()}.{"jpg"}'
 
 
 def _pdf_to_uplaod(prefix, instance, filename):

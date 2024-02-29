@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from utils import image_upload_to, cv_upload_to, resume_upload_to
+from .utils import image_upload_to, cv_upload_to, resume_upload_to
 
 
 def validate_pdf(value):

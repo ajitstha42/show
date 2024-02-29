@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "multiupload",
+    "django_seed",
     "posts",
     "users",
     "tailwind",
