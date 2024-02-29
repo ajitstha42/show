@@ -1,5 +1,13 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
+
+from utils import image_upload_to, cv_upload_to, resume_upload_to
+
+
+def validate_pdf(value):
+    if not value.name.endswith(".pdf"):
+        raise ValidationError("Only PDF files are allowed.")
 
 
 class CustomUser(AbstractUser):
@@ -12,10 +20,12 @@ class CustomUser(AbstractUser):
     ]
 
     username = models.CharField(unique=True, max_length=50)
-    cv = models.FileField(upload_to="cv/", null=True, blank=True)
+    cv = models.FileField(
+        upload_to=cv_upload_to, validators=[validate_pdf], null=True, blank=True
+    )
     bio = models.TextField(default="", blank=True, null=True)
-    resume = models.FileField(upload_to="resume/", null=True, blank=True)
-    avatar = models.ImageField(upload_to="images/", default="default.jpg")
+    resume = models.FileField(upload_to=resume_upload_to, null=True, blank=True)
+    avatar = models.ImageField(upload_to=image_upload_to, default="default.jpg")
     dob = models.DateField(blank=True, null=True)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)

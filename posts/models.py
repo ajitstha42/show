@@ -27,7 +27,7 @@ class Post(TimeStampedModel):
 class MediaFile(TimeStampedModel):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="media_files")
     media = models.FileField(
-        upload_to="media/",
+        upload_to="media_files/",
         validators=[
             FileExtensionValidator(allowed_extensions=["jpg", "png", "mp4", "mkv"])
         ],
