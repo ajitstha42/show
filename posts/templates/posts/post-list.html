@@ -5,14 +5,16 @@
   {% for post in posts %}
     <article class="max-w-screen-md mx-auto p-3 text-gray-800 border border-black rounded-lg mb-8">
       <div class="flex items-center mb-3">
-        <img
-          src="{% if post.user.profile.picture %}{{ post.user.profile.picture.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
-          class="rounded-full w-12 h-12 inline-block mr-2"
-        />
-        <div>
-          <p>{{ post.user.username }}</p>
-          <p>{{ post.created_at|date:"Y-m-d" }}</p>
-        </div>
+        <a href="{% url 'profile' pk=post.user.pk %}" class="flex items-center">
+          <img
+            src="{% if post.user.avatar %}{{ post.user.avatar.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
+            class="rounded-full w-12 h-12 inline-block mr-2"
+          />
+          <div>
+            <p><a href="{% url 'profile' pk=post.user.pk %}" class="text-blue-500 hover:underline">{{ post.user.username }}</a></p>
+            <p>{{ post.created_at|date:"Y-m-d" }}</p>
+          </div>
+        </a>
       </div>
       <p class="text-lg mb-3 font-medium border-b border-gray-500 my-4">
         <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
@@ -42,17 +44,17 @@
       </div>
 
       <div>
-          {% if post.user.has_cv%}
-            <a href="{{ post.user.cv.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download CV</a>
-            <span class="mx-2">and</span>
-          {% endif %}  
+          {% if user.is_authenticated %}
+            {% if post.user == user or user.role == "recruiter" %}
+              {% if post.user.has_cv %}
+                <a href="{{ post.user.cv.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download CV</a>           
+              {% endif %}  
 
-
-          {% if post.user.has_resume%}
-            <a href="{{ post.user.cv.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download CV</a>
-            <span class="mx-2">and</span>
-           <a href="{{ post.user.resume.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download Resume</a>
-          {% endif %}  
+              {% if post.user.has_resume %}
+                <a href="{{ post.user.resume.url }}" class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-2">Download Resume</a>
+              {% endif %}
+            {% endif %}
+          {% endif %}
       </div>
     </article>
   {% endfor %}

@@ -2,6 +2,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.urls import reverse_lazy
+
+from .mixins import RecruiterAccessMixin
 from .models import Post
 from .forms import PostForm
 
@@ -18,7 +20,7 @@ class PostDetailView(DetailView):
     context_object_name = "post"
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, RecruiterAccessMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = "posts/post-form.html"

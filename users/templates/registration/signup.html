@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form method="post" action="{% url 'signup' %}" class="max-w-sm mx-auto">
+<form method="post" action="{% url 'signup' %}" class="max-w-sm mx-auto" enctype="multipart/form-data">
     {% csrf_token %}
 
     {% if form.non_field_errors %}

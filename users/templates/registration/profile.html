@@ -9,8 +9,8 @@
       <h2 class="text-3xl font-semibold">{{ user_profile.username }}'s Profile</h2>
       {% if user.is_authenticated and user == user_profile %}
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-    <a href="{% url 'edit_profile' pk=user.pk %}" class="text-white no-underline">Edit Profile</a>
-</button>
+          <a href="{% url 'edit_profile' pk=user.pk %}" class="text-white no-underline">Edit Profile</a>
+        </button>
       {% endif %}
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -25,21 +25,25 @@
         {% endif %}
       </div>
     </div>
-    {% if user.is_authenticated and user == user_profile %}
-      <div class="mt-8">
-       <div class="mb-2">
-        {% if user_profile.has_cv %}
-          <a href="{{ user_profile.cv.url }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700" target="_blank">Download CV</a><br>
-        {% else %}
-          <p>No CV uploaded.</p>
-        {% endif %}
+    {% if user.is_authenticated %}
+      {% if user == user_profile or user.role == "recruiter" %}
+        <div class="mt-8">
+          <div class="mb-2">
+            {% if user_profile.has_cv %}
+              <a href="{{ user_profile.cv.url }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700" target="_blank">Download CV</a><br>
+            {% else %}
+              <p>No CV uploaded.</p>
+            {% endif %}
+          </div>
+          <div class="mb-2">
+            {% if user_profile.has_resume %}
+              <a href="{{ user_profile.resume.url }}" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-700" target="_blank">Download Resume</a><br>
+            {% else %}
+              <p>No Resume uploaded.</p>
+            {% endif %}
+          </div>
         </div>
-        {% if user_profile.has_resume %}
-          <a href="{{ user_profile.resume.url }}" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-700" target="_blank">Download Resume</a><br>
-        {% else %}
-          <p>No Resume uploaded.</p>
-        {% endif %}
-      </div>
+      {% endif %}
     {% endif %}
   </div>
 

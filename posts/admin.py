@@ -2,9 +2,16 @@ from django.contrib import admin
 from .models import Post, Comment, MediaFile
 
 
+class MediaFileInline(admin.TabularInline):
+    model = MediaFile
+    extra = 2
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    pass
+    inlines = [
+        MediaFileInline,
+    ]
 
 
 @admin.register(MediaFile)

@@ -1,5 +1,4 @@
 TO DO
--- Add Dummy data
 -- Send email for further discussion (SendGrid)
 -- Add Tags in Post
 -- User-based POST
@@ -8,3 +7,5 @@ TO DO
 
 REFACTOR:
 -- post-detail and post-list (CR)
+
+
