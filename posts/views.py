@@ -2,10 +2,15 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 
 from .mixins import RecruiterAccessMixin
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, EmailForm
 
 
 class PostListView(ListView):
@@ -57,3 +62,36 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         obj = self.get_object()
         return obj.user == self.request.user
+
+
+@login_required
+def send_email_view(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.user.role != "recruiter":
+        messages.error(request, "Only Recruiters can send emails.")
+        return redirect(reverse("posts:post-list"))
+
+    recruiter_email = request.user.email
+    recruit_email = post.user.email
+
+    if request.method == "POST":
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data["subject"]
+            message = form.cleaned_data["message"]
+
+            send_mail(subject, message, recruiter_email, [recruit_email])
+
+            messages.success(request, "Email sent successfully!")
+            return redirect("posts:post-list")
+    else:
+        default_subject = f"Regarding your job application for '{post.title}'"
+        default_message = f"Dear {post.user.username},\n\n"
+        form = EmailForm(
+            initial={"subject": default_subject, "message": default_message}
+        )
+
+    return render(
+        request, "send_email.html", {"form": form, "recruit_email": recruit_email}
+    )

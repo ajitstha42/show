@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mx-auto mt-5">
+    <h2 class="text-2xl font-bold mb-4">Send Email to {{ recruit_email }}</h2>
+  
+    <form method="post" class="max-w-md mx-auto">
+      {% csrf_token %}
+      
+      {% for message in messages %}
+        <div class="text-red-500 mb-4" role="alert">
+          <p class="font-bold">{{ message.tags }}</p>
+          <p>{{ message }}</p>
+        </div>
+      {% endfor %}
+
+      <div class="mb-4">
+        <label for="{{ form.subject.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
+        {{ form.subject }}
+        {% if form.subject.errors %}
+          <p class="text-red-500 text-sm">{{ form.subject.errors }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mb-4">
+        <label for="{{ form.message.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message</label>
+        {{ form.message }}
+        {% if form.message.errors %}
+          <p class="text-red-500 text-sm">{{ form.message.errors }}</p>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Send Email</button>
+    </form>
+  </div>
+{% endblock content %}

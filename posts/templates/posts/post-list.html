@@ -43,7 +43,8 @@
         <p>{{ post.comments.count }}</p>
       </div>
 
-      <div>
+      <div class="flex justify-between mt-4">
+        <div>
           {% if user.is_authenticated %}
             {% if post.user == user or user.role == "recruiter" %}
               {% if post.user.has_cv %}
@@ -55,6 +56,11 @@
               {% endif %}
             {% endif %}
           {% endif %}
+        </div>
+
+        {% if user.is_authenticated and user.role == "recruiter" %}
+          <a href="{% url 'send_email' post_id=post.id %}" class="bg-green-500 text-white py-2 px-4 rounded inline-block mt-2">Hire</a>
+        {% endif %}
       </div>
     </article>
   {% endfor %}
